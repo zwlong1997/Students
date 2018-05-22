@@ -1,0 +1,109 @@
+{{extend ('./layout.html')}}
+
+{{#block ("body")}}
+{{extend ('./menu.html')}}
+<div class="main-container">
+	<div class="padding-md">
+		<ul class="breadcrumb">
+			<li><span class="primary-font"><i class="icon-home"></i></span><a href="index.html"> Home</a></li>
+			<li>Table</li>
+			<li>Datatable</li>
+		</ul>
+		<input type="button" value="添加学生关系" onclick="location.href='/stupro/stuproAdd'">
+		<table class="table table-striped" id="dataTable">
+			<thead>
+			<tr>
+				<th>ID</th>
+				<th>学生</th>
+				<th>学期</th>
+				<th>年级</th>
+				<th>课程</th>
+				<th>必修/选修</th>
+				<th>操作</th>
+			</tr>
+			</thead>
+			<tbody>
+			{{#each(array)}}
+			<tr>
+				<td>{{this.stupro_id}}</td>
+				<td>{{this.stu_name}}</td>
+				<td>{{this.term_year}}</td>
+				<td>{{this.grade_name}}</td>
+				<td>{{this.pro_name}}</td>
+				<td>{{this.pro_type}}</td>
+				<td>
+					<a href="#" onclick="location.href='/stupro/stuproEdit?stupro_id={{this.stupro_id}}'">编辑</a>
+					<a href="#" onclick="Delete({{this.stupro_id}})">删除</a>
+				</td>
+			</tr>
+			{{/each}}
+
+			</tbody>
+		</table>
+
+		<ul class="pagination">
+
+			<!--上翻页-->
+			{{#if( page<=1 )}}
+			<li class="disabled">
+				<a>
+					<span>&laquo;</span>
+				</a>
+			</li>
+			{{else}}
+			<li>
+				<a href="/action/actionList?page={{page-1}}" aria-label="Previous">
+					<span aria-hidden="true">&laquo;</span>
+				</a>
+			</li>
+			{{/if}}
+
+			<!--中间页码-->
+			{{#each(totalPageArray)}}
+			{{#if(page===this)}}
+				<li  class="active"><a>{{this}}</a></li>
+			{{else}}
+				<li>
+					<a href="/action/actionList?page={{this}}">{{this}}</a>
+				</li>
+			{{/if}}
+			{{/each}}
+
+
+			<!--下翻页-->
+			{{#if(page >= totalPage)}}
+			<li class="disabled">
+				<a  aria-label="Next">
+					<span aria-hidden="true">&raquo;</span>
+				</a>
+			</li>
+			{{else}}
+			<li>
+				<a href="/action/actionList?page={{page+1}}" aria-label="Next">
+					<span aria-hidden="true">&raquo;</span>
+				</a>
+			</li>
+			{{/if}}
+
+
+
+		</ul>
+	</div><!-- ./padding-md -->
+</div><!-- /main-container -->
+<script>
+	function Delete(delete_id)
+	{
+		if(delete_id)
+		{
+			if(confirm('是否确认删除?'))
+			{
+				location.href="/stupro/stuproDelete?stupro_id="+delete_id;
+				return false;
+			}else{
+				location.href="/stupro/stuproList";
+				return false;
+			}
+		}
+	}
+</script>
+{{/block}}

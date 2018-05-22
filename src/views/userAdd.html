@@ -1,0 +1,284 @@
+{{extend ('./layout.html')}}
+
+{{#block ("body")}}
+{{extend ('./menu.html')}}
+<style>
+	#teacher,#student{
+		display: none;
+	}
+	select[name='school_id']{
+		display: none;
+	}
+	.form-group{
+		overflow: hidden;
+	}
+</style>
+<div class="main-container">
+	<div class="padding-md">
+		<h2 class="header-text">
+			Form Element
+			<span class="sub-header">
+							Basic form elements
+						</span>
+		</h2>
+		<form id="addUser" action="/user/userAdd" method="post" enctype="multipart/form-data">
+		<div class="smart-widget m-top-lg widget-dark-blue">
+			<div class="smart-widget-header">
+				添加账号
+				<span class="smart-widget-option">
+								<span class="refresh-icon-animated">
+									<i class="fa fa-circle-o-notch fa-spin"></i>
+								</span>
+	                            <a href="#" class="widget-toggle-hidden-option">
+	                                <i class="fa fa-cog"></i>
+	                            </a>
+	                            <a href="#" class="widget-collapse-option" data-toggle="collapse">
+	                                <i class="fa fa-chevron-up"></i>
+	                            </a>
+	                            <a href="#" class="widget-refresh-option">
+	                                <i class="fa fa-refresh"></i>
+	                            </a>
+	                            <a href="#" class="widget-remove-option">
+	                                <i class="fa fa-times"></i>
+	                            </a>
+	                        </span>
+			</div>
+			<div class="smart-widget-inner">
+				<div class="smart-widget-hidden-section">
+					<ul class="widget-color-list clearfix">
+						<li style="background-color:#20232b;" data-color="widget-dark"></li>
+						<li style="background-color:#4c5f70;" data-color="widget-dark-blue"></li>
+						<li style="background-color:#23b7e5;" data-color="widget-blue"></li>
+						<li style="background-color:#2baab1;" data-color="widget-green"></li>
+						<li style="background-color:#edbc6c;" data-color="widget-yellow"></li>
+						<li style="background-color:#fbc852;" data-color="widget-orange"></li>
+						<li style="background-color:#e36159;" data-color="widget-red"></li>
+						<li style="background-color:#7266ba;" data-color="widget-purple"></li>
+						<li style="background-color:#f5f5f5;" data-color="widget-light-grey"></li>
+						<li style="background-color:#fff;" data-color="reset"></li>
+					</ul>
+				</div>
+				<div class="smart-widget-body">
+
+						<div class="form-group">
+							<label for="user_name">用户名</label>
+							<input required type="text" class="form-control" id="user_name" name="user_name" placeholder="请输入用户名">
+						</div><!-- /form-group -->
+						<div class="form-group">
+							<label for="user_pwd">密码 </label>
+							<input required type="password" class="form-control" name="user_pwd" id="user_pwd">
+						</div><!-- /form-group -->
+						<div class="form-group">
+							<label for="exampleInputEmail1">Email</label>
+							<input type="email" class="form-control" id="exampleInputEmail1" name="user_email" placeholder="Enter email">
+						</div><!-- /form-group -->
+
+						<div class="form-group">
+							<label for="user_address">地址</label>
+							<input type="text" class="form-control" id="user_address" placeholder="请输入地址" name="user_address">
+						</div><!-- /form-group -->
+						<div class="form-group">
+							<label for="user_phone">电话号码 </label>
+							<input type="text" class="form-control" id="user_phone" name="user_phone" placeholder="请输入电话号码">
+						</div><!-- /form-group -->
+
+						<div class="form-group">
+							<label for="exampleInputEmail1">性别</label>
+							<div class="radio inline-block">
+								<div class="custom-radio m-right-xs">
+									<input required type="radio" id="user_sex1" name="user_sex" value="1">
+									<label for="user_sex1"></label>
+								</div>
+								<div class="inline-block vertical-top">男</div>
+							</div>
+							<div class="radio inline-block">
+								<div class="custom-radio m-right-xs">
+									<input required type="radio" id="user_sex2" name="user_sex" value="0">
+									<label for="user_sex2"></label>
+								</div>
+								<div class="inline-block vertical-top">女</div>
+							</div>
+						</div><!-- /form-group -->
+						<div class="form-group">
+							<label for="user_img">用户头像</label>
+							<input type="file" class="form-control" id="user_img" name="user_img" />
+						</div><!-- /form-group -->
+						<div class="form-group">
+							<label for="user_img">用户类型</label>
+							<select name="type_id" class="form-control" required onchange="addInfo(this)">
+								<option value="">请选择</option>
+								{{#each(type_list)}}
+								<option value="{{this.type_id}}">{{this.type_name}}</option>
+								{{/each}}
+							</select>
+						</div><!-- /form-group -->
+						<select name="school_id" class="form-control" required >
+							<option value="">请选择</option>
+							{{#each(school_list)}}
+							<option value="{{this.school_id}}">{{this.school_name}}</option>
+							{{/each}}
+						</select>
+				</div>
+			</div><!-- ./smart-widget-inner -->
+		</div><!-- ./smart-widget -->
+		<div id="teacher" class="smart-widget widget-purple">
+			<div class="smart-widget-header">
+				老师信息
+				<span class="smart-widget-option">
+								<span class="refresh-icon-animated">
+									<i class="fa fa-circle-o-notch fa-spin"></i>
+								</span>
+	                            <a href="#" class="widget-toggle-hidden-option">
+	                                <i class="fa fa-cog"></i>
+	                            </a>
+	                            <a href="#" class="widget-collapse-option" data-toggle="collapse">
+	                                <i class="fa fa-chevron-up"></i>
+	                            </a>
+	                            <a href="#" class="widget-refresh-option">
+	                                <i class="fa fa-refresh"></i>
+	                            </a>
+	                            <a href="#" class="widget-remove-option">
+	                                <i class="fa fa-times"></i>
+	                            </a>
+	                        </span>
+			</div>
+			<div class="smart-widget-inner">
+				<div class="smart-widget-hidden-section">
+					<ul class="widget-color-list clearfix">
+						<li style="background-color:#20232b;" data-color="widget-dark"></li>
+						<li style="background-color:#4c5f70;" data-color="widget-dark-blue"></li>
+						<li style="background-color:#23b7e5;" data-color="widget-blue"></li>
+						<li style="background-color:#2baab1;" data-color="widget-green"></li>
+						<li style="background-color:#edbc6c;" data-color="widget-yellow"></li>
+						<li style="background-color:#fbc852;" data-color="widget-orange"></li>
+						<li style="background-color:#e36159;" data-color="widget-red"></li>
+						<li style="background-color:#7266ba;" data-color="widget-purple"></li>
+						<li style="background-color:#f5f5f5;" data-color="widget-light-grey"></li>
+						<li style="background-color:#fff;" data-color="reset"></li>
+					</ul>
+				</div>
+				<div class="smart-widget-body">
+						<div class="form-group">
+							<label for="teach_name" class="col-lg-2 control-label">老师名称</label>
+							<div class="col-lg-10">
+								<input type="text" class="form-control" id="teach_name" name="teach_name" placeholder="请输入老师名称">
+							</div><!-- /.col -->
+						</div><!-- /form-group -->
+
+						<div class="form-group">
+							<label for="user_img" class="col-lg-2 control-label">所属学校</label>
+							<div class="col-lg-10" id="teacher_school">
+							</div>
+						</div><!-- /form-group -->
+
+						<div class="form-group">
+							<div class="col-lg-offset-2 col-lg-10">
+								<button type="submit" class="btn btn-success btn-sm">提交</button>
+							</div><!-- /.col -->
+						</div><!-- /form-group -->
+				</div>
+			</div><!-- ./smart-widget-inner -->
+		</div>
+		<!-- ./smart-widget -->
+		<div id="student" class="smart-widget widget-purple">
+			<div class="smart-widget-header">
+				学生信息
+				<span class="smart-widget-option">
+								<span class="refresh-icon-animated">
+									<i class="fa fa-circle-o-notch fa-spin"></i>
+								</span>
+	                            <a href="#" class="widget-toggle-hidden-option">
+	                                <i class="fa fa-cog"></i>
+	                            </a>
+	                            <a href="#" class="widget-collapse-option" data-toggle="collapse">
+	                                <i class="fa fa-chevron-up"></i>
+	                            </a>
+	                            <a href="#" class="widget-refresh-option">
+	                                <i class="fa fa-refresh"></i>
+	                            </a>
+	                            <a href="#" class="widget-remove-option">
+	                                <i class="fa fa-times"></i>
+	                            </a>
+	                        </span>
+			</div>
+			<div class="smart-widget-inner">
+				<div class="smart-widget-hidden-section">
+					<ul class="widget-color-list clearfix">
+						<li style="background-color:#20232b;" data-color="widget-dark"></li>
+						<li style="background-color:#4c5f70;" data-color="widget-dark-blue"></li>
+						<li style="background-color:#23b7e5;" data-color="widget-blue"></li>
+						<li style="background-color:#2baab1;" data-color="widget-green"></li>
+						<li style="background-color:#edbc6c;" data-color="widget-yellow"></li>
+						<li style="background-color:#fbc852;" data-color="widget-orange"></li>
+						<li style="background-color:#e36159;" data-color="widget-red"></li>
+						<li style="background-color:#7266ba;" data-color="widget-purple"></li>
+						<li style="background-color:#f5f5f5;" data-color="widget-light-grey"></li>
+						<li style="background-color:#fff;" data-color="reset"></li>
+					</ul>
+				</div>
+				<div class="smart-widget-body">
+					<div class="form-group">
+						<label for="stu_name" class="col-lg-2 control-label">学生名称</label>
+						<div class="col-lg-10">
+							<input type="text" class="form-control" id="stu_name" name="stu_name" placeholder="请输入学生名称">
+						</div><!-- /.col -->
+					</div><!-- /form-group -->
+
+					<div class="form-group">
+						<label for="student_school" class="col-lg-2 control-label">所属学校</label>
+						<div class="col-lg-10"  id="student_school">
+						</div>
+					</div><!-- /form-group -->
+
+					<div class="form-group">
+						<label for="student_class" class="col-lg-2 control-label">所属班级</label>
+						<div class="col-lg-10"  id="student_class">
+							<select  name="class_id" class="form-control">
+								<option value="">请选择</option>
+								{{#each(class_list)}}
+								<option value="{{this.class_id}}">{{this.class_name}}</option>
+								{{/each}}
+							</select>
+						</div>
+					</div><!-- /form-group -->
+
+					<div class="form-group">
+						<div class="col-lg-offset-2 col-lg-10">
+							<button type="submit" class="btn btn-success btn-sm">提交</button>
+						</div><!-- /.col -->
+					</div><!-- /form-group -->
+				</div>
+			</div><!-- ./smart-widget-inner -->
+		</div>
+		<!-- ./smart-widget -->
+		</form>
+
+	</div><!-- ./padding-md -->
+</div><!-- /main-container -->
+<script src="/js/jquery-1.11.1.min.js"></script>
+<script>
+	var school_list=$("#addUser").find("select[name='school_id']")[0];
+
+	function addInfo(obj)
+	{
+		var typeId=obj.value;
+		$("select[name='school_id']").remove();
+		$("#teacher").css("display","none");
+		$("#student").css("display","none");
+		$("#teacher_school select").css('display','none');
+		$("#student_school select").css('display','none');
+		$("#teacher").find("#teacher_school").empty();
+
+		if(typeId == 2)
+		{
+            $("#teacher").css("display","block");
+            $("#teacher").find("#teacher_school").append(school_list);
+            $("#teacher_school select").css('display','block');
+		}else if(typeId == 3){
+            $("#student").css("display","block");
+            $("#student").find("#student_school").append(school_list);
+            $("#student_school select").css('display','block');
+		}
+	}
+</script>
+{{/block}}

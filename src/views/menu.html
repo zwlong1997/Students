@@ -1,0 +1,59 @@
+<aside class="sidebar-menu fixed">
+	<div class="sidebar-inner scrollable-sidebar">
+		<div class="main-menu">
+			<ul class="accordion">
+				<li class="menu-header">
+					Main Menu
+				</li>
+
+				{{#each(menu)}}
+					{{#if(this.checkAction(this.action_name_en))}}
+						<li class="bg-palette1">
+							<a href="/{{this.action_url}}/{{this.action_name_en}}">
+											<span class="menu-content block">
+												<span class="menu-icon"><i class="block fa fa-home fa-lg"></i></span>
+												<span class="text m-left-sm">{{this.action_name_zh}}</span>
+											</span>
+								<span class="menu-content-hover block">
+												Home
+											</span>
+							</a>
+						</li>
+					{{/if}}
+				{{/each}}
+
+			</ul>
+		</div>
+		<div class="sidebar-fix-bottom clearfix">
+			<div class="user-dropdown dropup pull-left">
+				<a href="#" class="dropdwon-toggle font-18" data-toggle="dropdown"><i class="ion-person-add"></i>
+				</a>
+				<ul class="dropdown-menu">
+					<li>
+						<a href="inbox.html">
+							Inbox
+							<span class="badge badge-danger bounceIn animation-delay2 pull-right">1</span>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							Notification
+							<span class="badge badge-purple bounceIn animation-delay3 pull-right">2</span>
+						</a>
+					</li>
+					<li>
+						<a href="#" class="sidebarRight-toggle">
+							Message
+							<span class="badge badge-success bounceIn animation-delay4 pull-right">7</span>
+						</a>
+					</li>
+					<li class="divider"></li>
+					<li>
+						<a href="#">Setting</a>
+					</li>
+				</ul>
+			</div>
+			<a href="/home/logout" class="pull-right font-18" ><i class="ion-log-out"></i></a>
+		</div>
+	</div><!-- sidebar-inner -->
+</aside>

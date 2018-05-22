@@ -1,0 +1,105 @@
+{{extend ('./layout.html')}}
+
+{{#block ("body")}}
+{{extend ('./menu.html')}}
+<div class="main-container">
+	<div class="padding-md">
+		<ul class="breadcrumb">
+			<li><span class="primary-font"><i class="icon-home"></i></span><a href="index.html"> Home</a></li>
+			<li>Table</li>
+			<li>Datatable</li>
+		</ul>
+		<input type="button" value="添加权限" onclick="location.href='/action/actionAdd'">
+		<table class="table table-striped" id="dataTable">
+			<thead>
+			<tr>
+				<th>ID</th>
+				<th>权限中文名</th>
+				<th>权限英文名</th>
+				<th>顶级ID</th>
+				<th>操作</th>
+			</tr>
+			</thead>
+			<tbody>
+			{{#each(array)}}
+			<tr>
+				<td>{{this.action_id}}</td>
+				<td>{{this.action_name_zh}}</td>
+				<td>{{this.action_name_en}}</td>
+				<td>{{this.parent_id}}</td>
+				<td>
+					<a href="#" onclick="location.href='/action/actionEdit?action_id={{this.action_id}}'">编辑</a>
+					<a href="#" onclick="Delete({{this.action_id}})">删除</a>
+				</td>
+			</tr>
+			{{/each}}
+
+			</tbody>
+		</table>
+
+		<ul class="pagination">
+
+			<!--上翻页-->
+			{{#if( page<=1 )}}
+			<li class="disabled">
+				<a>
+					<span>&laquo;</span>
+				</a>
+			</li>
+			{{else}}
+			<li>
+				<a href="/action/actionList?page={{page-1}}" aria-label="Previous">
+					<span aria-hidden="true">&laquo;</span>
+				</a>
+			</li>
+			{{/if}}
+
+			<!--中间页码-->
+			{{#each(totalPageArray)}}
+			{{#if(page===this)}}
+				<li  class="active"><a>{{this}}</a></li>
+			{{else}}
+				<li>
+					<a href="/action/actionList?page={{this}}">{{this}}</a>
+				</li>
+			{{/if}}
+			{{/each}}
+
+
+			<!--下翻页-->
+			{{#if(page >= totalPage)}}
+			<li class="disabled">
+				<a  aria-label="Next">
+					<span aria-hidden="true">&raquo;</span>
+				</a>
+			</li>
+			{{else}}
+			<li>
+				<a href="/action/actionList?page={{page+1}}" aria-label="Next">
+					<span aria-hidden="true">&raquo;</span>
+				</a>
+			</li>
+			{{/if}}
+
+
+
+		</ul>
+	</div><!-- ./padding-md -->
+</div><!-- /main-container -->
+<script>
+	function Delete(delete_id)
+	{
+		if(delete_id)
+		{
+			if(confirm('是否确认删除?'))
+			{
+				location.href="/action/actionDelete?action_id="+delete_id;
+				return false;
+			}else{
+				location.href="/action/actionList";
+				return false;
+			}
+		}
+	}
+</script>
+{{/block}}

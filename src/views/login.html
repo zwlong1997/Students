@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  	<head>
+	    <meta charset="utf-8">
+	    <title>Simplify Admin</title>
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="description" content="">
+	    <meta name="author" content="">
+
+	    <!-- Bootstrap core CSS -->
+	    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		
+		<!-- Font Awesome -->
+		<link href="/css/font-awesome.min.css" rel="stylesheet">
+
+		<!-- ionicons -->
+		<link href="/css/ionicons.min.css" rel="stylesheet">
+		
+		<!-- Simplify -->
+		<link href="/css/simplify.min.css" rel="stylesheet">
+
+  	</head>
+
+  	<body class="overflow-hidden light-background">
+		<div class="wrapper no-navigation preload">
+			<div class="sign-in-wrapper">
+				<div class="sign-in-inner">
+					<div class="login-brand text-center">
+						<i class="fa fa-database m-right-xs"></i> Simplify <strong class="text-skin">Admin</strong>
+					</div>
+
+					<form>
+						<div class="form-group m-bottom-md">
+							<input type="text" class="form-control" placeholder="username" name="user_name">
+						</div>
+						<div class="form-group">
+							<input type="password" class="form-control" placeholder="Password" name="user_pwd">
+						</div>
+						<div class="form-group">
+							<input type="text" class="form-control" name="vcode">
+						</div>
+						<div class="form-group">
+							<img src="/home/vcode" id="vcode" />
+						</div>
+
+						<div class="form-group">
+							<div class="custom-checkbox">
+								<input type="checkbox" id="chkRemember">
+								<label for="chkRemember"></label>
+							</div>
+							Remember me
+						</div>
+
+						<div class="m-top-md p-top-sm">
+							<a href="javascript:void(0)" class="btn btn-success block" onclick="login()">Sign in</a>
+						</div>
+
+						<div class="m-top-md p-top-sm">
+							<div class="font-12 text-center m-bottom-xs">
+								<a href="javascript:void(0)" class="font-12" onclick="Forgot()">Forgot password ?</a>
+							</div>
+							<div class="font-12 text-center m-bottom-xs">Do not have an account?</div>
+							<a href="signup.html" class="btn btn-default block">Create an accounts</a>
+						</div>
+					</form>
+				</div><!-- ./sign-in-inner -->
+			</div><!-- ./sign-in-wrapper -->
+		</div><!-- /wrapper -->
+
+		<a href="" id="scroll-to-top" class="hidden-print"><i class="icon-chevron-up"></i></a>
+
+	    <!-- Le javascript
+	    ================================================== -->
+	    <!-- Placed at the end of the document so the pages load faster -->
+		
+		<!-- Jquery -->
+		<script src="/js/jquery-1.11.1.min.js"></script>
+		
+		<!-- Bootstrap -->
+	    <script src="/bootstrap/js/bootstrap.min.js"></script>
+		
+		<!-- Slimscroll -->
+		<script src='/js/jquery.slimscroll.min.js'></script>
+		
+		<!-- Popup Overlay -->
+		<script src='/js/jquery.popupoverlay.min.js'></script>
+
+		<!-- Modernizr -->
+		<script src='/js/modernizr.min.js'></script>
+		
+		<!-- Simplify -->
+		<script src="/js/simplify/simplify.js"></script>
+	
+  	</body>
+</html>`
+<script>
+	$("#vcode").click(function(){
+        this.src = '/home/vcode?vid='+Math.random();
+	});
+
+	function login()
+	{
+	    var user_name = $("input[name='user_name']").val();
+	    var user_pwd = $("input[name='user_pwd']").val();
+	    var vcode = $("input[name='vcode']").val();
+	    $.ajax({
+			url:'/home/login',
+			type:'post',
+			data:`user_name=${user_name}&user_pwd=${user_pwd}&vcode=${vcode}`,
+			dataType:"json",
+			success:function(result)
+			{
+				console.log(result);
+				if(result.status == 1)
+				{
+				    location.href = '/home/index';
+				}else{
+				    alert(result.message);
+				    return false;
+				}
+			},error:function(err)
+			{
+				console.log(err);
+			}
+		});
+	}
+
+	function Forgot()
+	{
+		var email=prompt("请输入邮箱地址");
+		if(email!="" && email != null)
+		{
+			location.href="/home/forgot?email="+email;
+			return false;
+		}
+	}
+</script>
